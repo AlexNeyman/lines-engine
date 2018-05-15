@@ -1,4 +1,4 @@
-class BaseMigration < ActiveRecord::Migration
+class BaseMigration < ActiveRecord::Migration[4.2]
   # encoding: UTF-8
   # This file is auto-generated from the current state of the database. Instead
   # of editing this file, please use the migrations feature of Active Record to
@@ -56,6 +56,8 @@ class BaseMigration < ActiveRecord::Migration
       t.integer  "sluggable_id",              null: false
       t.string   "sluggable_type", limit: 40
       t.datetime "created_at"
+      t.datetime "updated_at"
+      t.datetime "deleted_at"
     end
 
     add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", unique: true, using: :btree

@@ -5,7 +5,7 @@ require 'pygments'
 module Lines
   module ApplicationHelper
 
-    # Renders the teaser for an article. 
+    # Renders the teaser for an article.
     def render_teaser(article, article_counter=0)
       if article_counter < 0
         teaser = article.teaser && article.teaser.present? ? markdown(article.teaser) : nil
@@ -15,7 +15,7 @@ module Lines
       teaser
     end
 
-    # Highlights and formats code fragments with Pygments 
+    # Highlights and formats code fragments with Pygments
     class HTMLwithPygments < Redcarpet::Render::XHTML
       def block_code(code, language)
         sha = Digest::SHA1.hexdigest(code)
@@ -72,11 +72,11 @@ module Lines
       html = content_tag(:div, id: 'navbar') do
         content_tag(:div, class: 'navbar-inner') do
           if current_lines_user
-            content_tag(:span, class: 'buttons', &block) + "<div class='btn-menu'><dic class='stripes'></div></div>".html_safe + 
+            content_tag(:span, class: 'buttons', &block) + "<div class='btn-menu'><dic class='stripes'></div></div>".html_safe +
             "<div class='submenu'>
               <div class='submenu-inner'>
                 <ul>
-                  <li>#{link_to("Dashboard", admin_articles_path)}</li>
+                  <li>#{link_to(t('lines.buttons.dashboard').html_safe, admin_articles_path)}</li>
                   <li>#{link_to(t('activerecord.models.lines/author', count: 2).html_safe, admin_authors_path)}</li>
                 </ul>
                 <ul>
@@ -94,7 +94,7 @@ module Lines
           end
         end
       end
-      html    
+      html
     end
 
     # Returns site name for actionbar, dependend on current site
