@@ -22,13 +22,13 @@ module Lines
           else
             @articles = Article.published.page(params[:page].to_i).padding(1)
           end
-          
-          if @articles.first_page?
-            if @first_article = Article.published.first
+
+          if @articles.first_page? && !params[:tag]
+            if (@first_article = Article.published.first)
               @first_article.teaser = nil unless @first_article.teaser.present?
             end
           end
-          
+
           set_meta_tags title: SITE_TITLE,
                         description: CONFIG[:meta_description],
                         keywords: KEYWORDS,
@@ -58,7 +58,7 @@ module Lines
       }
       meta_tags[:image] = CONFIG[:host] + @article.image_url if @article.image_url.present?
       set_meta_tags title: @article.title,
-                    keywords: KEYWORDS + @article.tag_list.to_s,
+                    keywords: [KEYWORDS, @article.tag_list.to_s].select(&:present?).join(', '),
                     open_graph: meta_tags
       if request.path != article_path(@article)
         return redirect_to @article, status: :moved_permanently
